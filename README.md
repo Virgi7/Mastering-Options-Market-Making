@@ -206,8 +206,8 @@ For some further improvements, the current approach lacks precise time order in 
 ### Scripts
 - _1.Simple Linear Regression in-sample.R_: This script contains the Simple Linear Regression implementation.
 - _2.Scalar-on-function for RV2 in-sample.R_: This script contains the Scalar-on-function implementation for $RV_{t_{i+10min}}^2$.
-- _2.1 Optimal number of basis selection.R_: This script performs the best parameters selection for the functional model.
-- _2.2 Freedman and Lane permutation test.R_: This script performs the Freedman and Lane permutation test on functional model.
+- _2.1Optimal number of basis selection.R_: This script performs the best parameters selection for the functional model.
+- _2.2Freedman and Lane permutation test.R_: This script performs the Freedman and Lane permutation test on functional model.
 - _3.Scalar-on-function for DeltaRV in-sample.R_:This script contains the Scalar-on-function implementation for $\Delta RV_t$.
 - _4.Simple Linear Regression+CP out-of-sample.R_:  This script contains the Simple Linear Regression and Conformal Prediction implementation and evaluation on out-of-sample data.
 - _5.Scalar-on-function for RV2+CP out-of-sample.R_:  This script contains the Scalar-on-function for $RV_{t_{i+10min}}^2$ and Conformal Prediction implementation and evaluation on out-of-sample data.
