@@ -200,16 +200,18 @@ For some further improvements, the current approach lacks precise time order in 
 
 
 # Repository Files
-- _CrashBusters.ipynb_: This notebook contains the final implementation of our EWS product CrashBusters.
-- _CrashBustersApp.ipynb_: This is the notebook of our CrashBusters Application.
-- _DecisionTree\_RandomForest.ipynb_: This notebook details the use of a Decision Tree classifier to identify market crashes.
-- _Logistic Regression.ipynb_: This notebook contains the implementation and evaluation of a Logistic Regression model for market anomaly detection.
-- _NaiveBayes.ipynb_: This notebook contains the code referred to the Naive Bayes method for market crashes detection.
-- _SVM.ipynb_: This notebook demonstrates the use of a Support Vector Machine (SVM) for classifying market crashes.
-- _kNN.ipynb_:  This notebook contains the analysis of kNN classifier as market anomaly detection model.
-
-# How to Use
-- Clone the repository to your local machine.
-- Navigate to the directory and open the Jupyter notebooks in your preferred environment.
-- Run the notebooks in the sequence provided to replicate the experiments and view the results.
-- The final model selection notebook (_CrashBusters.ipynb) will guide you through the process of selecting the most effective model based on our experiments.
+### Data
+- _train.xlsx_: Excel file containing all the target data
+- _book_train.parquet_: Folder containing a parquet file with all the order book data related to each stock
+### Scripts
+- _1.Simple Linear Regression in-sample.R_: This script contains the Simple Linear Regression implementation.
+- _2.Scalar-on-function for RV2 in-sample.R_: This script contains the Scalar-on-function implementation for $RV_{t_{i+10min}}^2$.
+- _2.1 Optimal number of basis selection.R_: This script performs the best parameters selection for the functional model.
+- _2.2 Freedman and Lane permutation test.R_: This script performs the Freedman and Lane permutation test on functional model.
+- _3.Scalar-on-function for DeltaRV in-sample.R_:This script contains the Scalar-on-function implementation for $\Delta RV_t$.
+- _4.Simple Linear Regression+CP out-of-sample.R_:  This script contains the Simple Linear Regression and Conformal Prediction implementation and evaluation on out-of-sample data.
+- _5.Scalar-on-function for RV2+CP out-of-sample.R_:  This script contains the Scalar-on-function for $RV_{t_{i+10min}}^2$ and Conformal Prediction implementation and evaluation on out-of-sample data.
+- _6.Scalar-on-function for DeltaRV+CP out-of-sample.R_: This script contains the Scalar-on-function for $\Delta RV_t$ and Conformal Prediction implementation and evaluation on out-of-sample data.
+- _7.Pinball Losses and Winkler Scores.R_:  This script contains the Pinball loss and Winkler score evaluations for each of the three models.
+- _8.Rolling window forecasting.R_: This script performs a time reordering and the last two months of 2020 realized volatility forecasting, using a rolling window.
+- _fRegress std error mia versione.R_: This script is a modified version of fRegress.stderr function (it is upload as a library at the beginning of each of the previous scripts).
