@@ -22,24 +22,24 @@ The complete implementation of these models can be found in the project's respec
 
 # Problem Setting
 
-## Data overview
+### Data overview
 The dataset, sourced from Kaggle, consists of 112 anonymized stock, identified by a number from 1 to 126. For each stock high-frequency trade and order book data are available. It is important to note that all models and results discussed in the following chapters are based on analyses conducted on Stock 61, which was randomly selected from the dataset. However, it should also be highlighted that the observed results are consistent across other stocks in the dataset, and so, for they robustness, can be generalized.
 
 For each stock, the trade and the order book dataset include detections related to various time intervals of 20 minutes during the trading day, defined as time buckets. These buckets, while not necessary ordered, maintain a consistent structure across all stocks and are defined as intervals $T_i = (t_i; t_{i+10_{min}})$, where $t_i$ represents the first 10 minutes and $t_{i+10_{min}}$ identifies the second 10 minutes, for all the 3830 intervals in the dataset, identified with $i$. For each bucket $T_i$, trades and order book data are provided  with a granularity at the level of the seconds in the first 10 minutes.
 
 For each time bucket described in both the order book and trade data, the realized volatility over the last 10 minutes in the bucket is also provided; it is the target for the model (i.e. what has to be predicted), which will detailed further in the next section.
 
-## Data pre-processing
+### Data pre-processing
 It is necessary to highlight two important points; the first one is about missing data in the order book.
 In fact, there are many missing data related to entirely time buckets, which means that there were no updates in bid and ask prices in that period.
 And even in specific time slots, the seconds measured are different and in different quantities, but this does not represent a scarcity problem because when there is less variation in prices and quantities, the value of volatility changes less quickly and it is better to give more weight, and therefore more relevance, to the high variation buckets.
 
 The second point concerns the decision to leave out trade data in this particular case, instead preferring order book data, which are constantly available, even for illiquid products. However, trade data can be incorporated into the model in a further analysis, should it be necessary to capture further aspects of market activity.
 
-## Reverse Engineering and Embedding
+### Reverse Engineering and Embedding
 It is important to note that, using techniques developed by participants in the Optiver challenge, which used the dataset in question, it has been possible to approximate the true time-order of the $T_i$'s and to establish an approximate mapping between the anonymized stocks and the actual market assets. These insights are used in the final phase of this paper, where it is simulated the application of the proposed models on the data.
 
-## Simple Linear Regression
+### Simple Linear Regression
 Starting from the current literature, the widely used model for forecasting realized volatility is the HAR model, introduced by \cite{corsi2012har}, who demonstrates that a simple, linear model, based on historical realized volatilities, yields strong forecasting performance. However, the HAR model is not suitable in this context due to the loss of temporal order within the 20-minutes intervals.
 
 Building upon the forecasting capability of the HAR model, this study first implements a Linear Regression model for forecasting $RV_{t_{i+10_{min}}}$, using as a covariate the standard deviation of the stock log-returns over the first half of the 20-minutes interval; in fact, this measure is identified as the most effective approximation of realized volatility, by \cite{zhang2005tale}. It is identified by $RV_{t_i}$.
@@ -109,11 +109,12 @@ This model results as the best performing one in terms of accuracy. Here the RMS
 | Scalar-on function $RV_{t_{i+10min}}^2$ | 8.901            |
 | Scalar-on function $\Delta RV_t$        | 8.431            |
 
+*Table: Root Mean Squared Error evaluated on in-sample data, for each of the three described models.*
 
 # Point-wise Forecasting and Conformal Prediction
 In the second phase of this work, it is evaluated the out-of-sample point-wise forecasts produced by the three models introduced in the previous sections. Given that the models exhibit heteroscedasticity and non-Gaussianity in residuals, the predictions are further refined using the Conformal Prediction method. This method, as introduced by \cite{fontana2023conformal}, is a distribution-free and non-parametric approach requiring minimal assumptions, capable of producing statistically valid prediction intervals even in finite-sample scenarios.
 
-## Conformal Prediction with Inductive Conformal Prediction (ICP)
+### Conformal Prediction with Inductive Conformal Prediction (ICP)
 This repository implements **Inductive Conformal Prediction (ICP)**, following the methodology presented in \cite{kato}. The goal of the project is to evaluate predictive accuracy and precision of different models for forecasting realized volatility using **Linear Regression** and **Scalar-on-function** approaches.
 
 The workflow includes:
@@ -146,11 +147,13 @@ $R_i = \left|\frac{y_i - \hat{y}_i}{\sigma_i} \right|$ and $\sigma_i = e^{\mu_i}
 
 With the application of this method, the first thing done is the evaluation of the out-of-sample forecasting, for each of the three method described above, confirming that the linear model and the Scalar-on-function $\Delta RV_t$ are the best performing ones.
 
-| Model                                   | RMSE (out.of-sample) |
+| Model                                   | RMSE (out-of-sample) |
 |-----------------------------------------|---------------------:|
 | Simple Linear Regression                | 8.879                | 
 | Scalar-on function $RV_{t_{i+10min}}^2$ | 9.604                |
 | Scalar-on function $\Delta RV_t$        | 8.771                |
+
+*Table: Root Mean Squared Error evaluated on out-of-sample data, for each of the three described models.*
 
 Additionally, also the goodness of fit of these regions can be then evaluated by computing some metrics, specifically related to prediction regions, like their medium width and total coverage and also to probabilistic forecasting, such as Pinball loss and Winkler score.
 
@@ -191,7 +194,7 @@ Three main conclusions can be drawn from this work:
 
 It is therefore possible to say that non-parametric statistical models are quite an advantageous method from a market maker's point of view.
 
-## Future Improvements
+### Future Improvements
 
 For some further improvements, the current approach lacks precise time order in the data, which limits the ability to capture recurring market patterns. Incorporating time re-ordering and applying econometric models like ARCH and GARCH could address this topic. Finally, expanding the dataset and exploring volatility discrepancies, such as with variance swaps, could further optimize hedging and trading strategies.
 
