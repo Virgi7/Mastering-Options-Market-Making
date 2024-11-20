@@ -14,8 +14,8 @@ The complete implementation of these models can be found in the project's respec
 1. [Introduction](#introduction)
 2. [Problem Setting](#problem-setting)
 3. [Scalar-on-function Model](#scalar-on-function-model)
-4. [Point-wise Forecasting and Conformal Prediction](#pointwise-forecasting-and-conformal-prediction)
-5. [Hedging Strategy based on Conformal Prediction](#hedging-startegy-based-on-conformal-prediction)
+4. [Point-wise Forecasting and Conformal Prediction](#point-wise-forecasting-and-conformal-prediction)
+5. [Hedging Strategy based on Conformal Prediction](#hedging-strategy-based-on-conformal-prediction)
 6. [Conclusions and Future Developments](#conclusions-and-future-developments)
 7. [Repository Files](#repository-files)
 8. [How to Use](#how-to-use)
@@ -111,11 +111,9 @@ This model results as the best performing one in terms of accuracy. Here the RMS
 
 
 # Point-wise Forecasting and Conformal Prediction
-
 In the second phase of this work, it is evaluated the out-of-sample point-wise forecasts produced by the three models introduced in the previous sections. Given that the models exhibit heteroscedasticity and non-Gaussianity in residuals, the predictions are further refined using the Conformal Prediction method. This method, as introduced by \cite{fontana2023conformal}, is a distribution-free and non-parametric approach requiring minimal assumptions, capable of producing statistically valid prediction intervals even in finite-sample scenarios.
 
 ## Conformal Prediction with Inductive Conformal Prediction (ICP)
-
 This repository implements **Inductive Conformal Prediction (ICP)**, following the methodology presented in \cite{kato}. The goal of the project is to evaluate predictive accuracy and precision of different models for forecasting realized volatility using **Linear Regression** and **Scalar-on-function** approaches.
 
 The workflow includes:
@@ -156,14 +154,14 @@ With the application of this method, the first thing done is the evaluation of t
 
 Additionally, also the goodness of fit of these regions can be then evaluated by computing some metrics, specifically related to prediction regions, like their medium width and total coverage and also to probabilistic forecasting, such as Pinball loss and Winkler score.
 
-The conformal regions computed and compared are at 90%, 95% and 99%. Coverage is not very informative as the obtained values are similar across all the three models
+The calculated and compared compliant regions are at a significance level of 90%, 95% and 99%. The coverage is not very informative as the values obtained are similar for all three models, while the other metrics seem to confirm what was obtained in terms of accuracy, selecting the Scalar-on-fucntion model for $\Delta RV_t$ as the best.
 
 VEDI SE INSERIRE I GRAFICI
 
 # Hedging Strategy based on Conformal Prediction
 The final stage of this study exploits the goodness of fit and the predictive power of the Scalar-on-function for $\Delta RV_{t}$, combined with the probabilistic power of the Conformal Prediction method. The model is applied directly to data for matched stocks: Stock 59 with AMGN, Stock 4 with CHTR, and Stock 41 with CSCO, using IV data from January 1 to December 31, 2020.
 
-In this stage, RV forecasting is applied using a rolling window to predict intra-day RV values for each day in the last two months of the year. The hedging strategy leverages RV and IV differences; the strategy performed is to buy when RV is higher than IV and to sell when RV is lower than IV
+In this stage, RV forecasting is applied using a rolling window to predict intra-day RV values for each day in the last two months of the year. The hedging strategy leverages RV and IV differences; the strategy performed is to buy when RV is higher than IV and to sell when RV is lower than IV. (Reasons of this relation are described better in \cite{}) 
 
 The effectiveness of the forecasted buy and sell signals is summarized in the table below, using three empirical metrics:
 - **Wrong Signal (WS)**: Counts instances where the model's signal opposes the actual RV.
@@ -180,8 +178,22 @@ These metrics are evaluated at the 99% and 95% significance levels, considering 
 
 *Table: Wrong Signal (WS), Lost Opportunity (LO), and Successful Trade (ST) percentages in conformal regions at different significance levels for stocks AMGN-59, CHTR-4, and CSCO-41.*
 
+The number of opposite signals (WS) is very low, with a maximum of one detection per stock. LOs are more frequent at the 99% significance level, as expected, due to the more conservative nature of the strategy. Table above highlights that the model performs well, considering 5% as minimal difference between RV and IV, showing many successful trade for each stock.  It should also be noted that the percentages not identified by the table are a correct signal of holding position, as no major changes in RV are expected.
 
 # Conclusions and Future Developments
+### Conclusions
+
+Three main conclusions can be drawn from this work:
+
+- All three models, both linear and functional, perform well in predicting realized volatility, with the Scalar-on-function for $\Delta RV_t$ achieving the lowest RMSE.
+- The Conformal Prediction method, used to improve point-wise forecasting, seems to be a valuable tool for models with non-Gaussian, heteroscedastic residuals, ensuring reliable probabilistic forecasts.
+- This framework successfully demonstrates the application of a hedging strategy, showing promising results in generating buy or sell signals based on RV forecasts, with flexibility for varying risk profiles using conformal prediction intervals.
+
+It is therefore possible to say that non-parametric statistical models are quite an advantageous method from a market maker's point of view.
+
+## Future Improvements
+
+For some further improvements, the current approach lacks precise time order in the data, which limits the ability to capture recurring market patterns. Incorporating time re-ordering and applying econometric models like ARCH and GARCH could address this topic. Finally, expanding the dataset and exploring volatility discrepancies, such as with variance swaps, could further optimize hedging and trading strategies.
 
 
 # Repository Files
