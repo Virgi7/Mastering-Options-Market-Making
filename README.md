@@ -163,17 +163,16 @@ The images below compare the widths of the conformal regions at different confid
 
 <div style="display: flex; justify-content: space-around;">
   <figure>
-    <img src="https://github.com/user-attachments/assets/8bed8c03-caaa-41f6-9494-7d0683146719" alt="Conformal Region Width at 90%" width="330"/>
+    <img src="https://github.com/user-attachments/assets/8bed8c03-caaa-41f6-9494-7d0683146719" alt="Conformal Region Width at 90%" width="300"/>
   </figure>
   <figure>
-    <img src="https://github.com/user-attachments/assets/50637985-8fdf-44c0-9a67-4a399cab2e5c" alt="Conformal Region Width at 95%" width="330"/>
+    <img src="https://github.com/user-attachments/assets/50637985-8fdf-44c0-9a67-4a399cab2e5c" alt="Conformal Region Width at 95%" width="300"/>
   </figure>
   <figure>
-    <img src="https://github.com/user-attachments/assets/a8539e95-0d19-42eb-8f70-7216f805a996" alt="Conformal Region Width at 99%" width="330"/>
+    <img src="https://github.com/user-attachments/assets/a8539e95-0d19-42eb-8f70-7216f805a996" alt="Conformal Region Width at 99%" width="300"/>
   </figure>
 </div>
-
-
+<br><br>
 And here the Pinball losses and Winkler scores for each model:
 
 <div style="display: flex; justify-content: center; gap: 20px;">
