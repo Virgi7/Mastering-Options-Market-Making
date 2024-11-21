@@ -20,7 +20,7 @@ The complete implementation of these models can be found in the project's respec
 7. [Repository Files](#repository-files)
 8. [How to Use](#how-to-use)
 
-# Problem Setting
+## Problem Setting
 
 ### Data overview
 The dataset, sourced from Kaggle[^8], consists of 112 anonymized stock, identified by a number from 1 to 126. For each stock, high-frequency trade and order book data are available. It is important to note that all models and results discussed in the following chapters are based on analyses conducted on **Stock 61**, which was randomly selected from the dataset. However, it should also be highlighted that the observed results are consistent across other stocks in the dataset, and so, for they robustness, can be generalized.
@@ -58,7 +58,7 @@ Where:
 
 This first model seems to have a good prediction capability, as assessed by the Root Mean Squared Error (RMSE). The primary limitation of this Linear Regression model lies in the violation of two key assumptions: homoscedasticity and Gaussianity of the residuals. While these issues will not be solved in next models fitting, they will be partially addressed through the later application of the assumptions-free Conformal Prediction method for probabilistic forecasting.
 
-# Scalar-on-function Model
+## Scalar-on-function Model
 To improve prediction accuracy, it is introduced a **linear functional model** that incorporates second-by-second **quadratic log-return series** from each $t_i$'s order book snapshot as a functional covariate.
 
 The **central idea**[^6], is to expand each covariate, which has multiple values within each 10-minutes interval, by adding a new dimension representing seconds within the interval. This is achieved using carefully chosen **basis functions**.
@@ -111,7 +111,7 @@ This model results as the best performing one in terms of accuracy. Here the RMS
 
 *Table: Root Mean Squared Error evaluated on in-sample data, for each of the three described models.*
 
-# Point-wise Forecasting and Conformal Prediction
+## Point-wise Forecasting and Conformal Prediction
 In the second phase of this work, it is evaluated the out-of-sample point-wise forecasts produced by the three models introduced in the previous sections. Given that the models exhibit heteroscedasticity and non-Gaussianity in residuals, the predictions are further refined using the Conformal Prediction method. This method [^3], is a distribution-free and non-parametric approach requiring minimal assumptions, capable of producing statistically valid prediction intervals even in finite-sample scenarios.
 
 ### Conformal Prediction with Inductive Conformal Prediction (ICP)
@@ -186,7 +186,7 @@ And here the Pinball losses and Winkler scores for each model:
 
 It is clear that the Scalar-on-function model for $\Delta RV_{t}$ achieves the tightest intervals in two out of the three chosen significance levels. Additionally, it outperforms the other models with the lowest Pinball loss and Winkler score. However, the Linear Model also demonstrates strong performance, making it a competitive alternative.
 
-# Hedging Strategy based on Conformal Prediction
+## Hedging Strategy based on Conformal Prediction
 The final stage of this study exploits the goodness of fit and the predictive power of the Scalar-on-function for $\Delta RV_{t}$, combined with the probabilistic power of the **Conformal Prediction** method. The model is applied directly to data for matched stocks: Stock 59 with AMGN, Stock 4 with CHTR, and Stock 41 with CSCO, using IV data from January 1 to December 31, 2020.
 
 In this stage, RV forecasting is applied using a **rolling window** to predict intra-day RV values for each day in the last two months of the year. The hedging strategy leverages RV and IV differences; the strategy performed is to buy when RV is higher than IV and to sell when RV is lower than IV. (Better explained in [^5]).
@@ -213,7 +213,7 @@ It is possible to compare the overcited results in terms of **small and large ti
 
 It represents an interesting insight as the model performs better on CSCO, compared to CHTR. The RMSE for CSCO is half of that for CHTR, supporting findings[^7] that large-tick stocks yield more reliable predictions, leading to better buy and sell signals for CSCO.
 
-# Conclusions and Future Developments
+## Conclusions and Future Developments
 ### Conclusions
 
 Three main conclusions can be drawn from this work:
