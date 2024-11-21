@@ -210,7 +210,7 @@ These metrics are evaluated at the 99% and 95% significance levels, considering 
 The number of opposite signals (WS) is very low, with a maximum of one detection per stock. LOs are more frequent at the 99% significance level, as expected, due to the more conservative nature of the strategy. Table above highlights that the model performs well, considering 5% as minimal difference between RV and IV, showing many successful trade for each stock. It should also be noted that the percentages not identified by the table are a correct signal of holding position, as no major changes in RV are expected.
 
 ### Small and Large-tick stocks comparison
-It is possible to compare the overcited results in terms of **small and large tick stocks**[^7], using Stock 4-CHTR, identified as small-tick stocks and Stock 41-CSCO, classified as large tick stocks. 
+It is possible to compare the overcited results in terms of **small and large tick stocks**[^7], using Stock 4-CHTR, identified as small-tick stock and Stock 41-CSCO, classified as large tick stock. 
 
 It represents an interesting insight as the model performs better on CSCO, compared to CHTR. The RMSE for CSCO is half of that for CHTR, supporting findings[^7] that large-tick stocks yield more reliable predictions, leading to better buy and sell signals for CSCO.
 
@@ -232,6 +232,9 @@ For some further improvements, the current approach lacks precise time order in 
 
 # Repository Files
 ### Data
+The dataset is too large to upload directly to GitHub. You can download it from the following link:
+
+[Download Dataset from Google Drive](https://drive.google.com/your-link)
 - _train.xlsx_: Excel file containing all the target data.
 - _book_train.parquet_: Folder containing a parquet file with all the order book data related to each stock.
 - _correct_order_time_id.xlsx_: Excel file containing the right time_ids ordering.
@@ -261,7 +264,7 @@ For some further improvements, the current approach lacks precise time order in 
 [^2]: Zhang, Lan and Mykland, Per A. and A{\"i}t-Sahalia, Yacine *A Tale of Two Time Scales: Determining Integrated Volatility with Noisy High-Frequency Data*. 2005.
 [^3]: Matteo Fontana and Gianluca Zeni and Simone Vantini *Conformal Prediction: a Unified Review of Theory and New Challenges*. 2023.
 [^4]: Kato, Yuko and Tax, David MJ and Loog, Marco *A Review of Nonconformity Measures for Conformal Prediction in Regression*. 2023.
-[^5]: Hull, John C. *Options, Futures, and Other Derivative Securities*. 2002.
+[^5]: Carr, Peter and Madan, Dilip *Towards a Theory of Volatility Trading*. 1998.
 [^6]: Ramsay, James O. and Silverman, Bernard W. *Functional Data Analysis*. 2005.
 [^7]: Antonio Briola and Silvia Bartolucci and Tomaso Aste *Deep Limit Order Book Forecasting: A Microstructural Guide*. 2024.
 [^8]: Kaggle. (2021). *Optiver Realized Volatility Prediction*. 2021. Retrieved from [https://www.kaggle.com/competitions/optiver-realized-volatility-prediction/data](https://www.kaggle.com/competitions/optiver-realized-volatility-prediction/data).
