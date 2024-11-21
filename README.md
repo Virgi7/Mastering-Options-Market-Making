@@ -157,9 +157,32 @@ With the application of this method, the first thing done is the evaluation of t
 
 Additionally, also the goodness of fit of these regions can be then evaluated by computing some metrics, specifically related to prediction regions, like their medium width and total coverage and also to probabilistic forecasting, such as Pinball loss and Winkler score.
 
-The calculated and compared compliant regions are at a significance level of 90%, 95% and 99%. The coverage is not very informative as the values obtained are similar for all three models, while the other metrics seem to confirm what was obtained in terms of accuracy, selecting the Scalar-on-fucntion model for $\Delta RV_t$ as the best.
+The calculated and compared compliant regions are at a significance level of 90%, 95% and 99%. The coverage is not very informative as the values obtained are similar for all three models, while the other metrics seem to confirm what was obtained in terms of accuracy, selecting the Scalar-on-function model for $\Delta RV_t$ as the best.
 
-VEDI SE INSERIRE I GRAFICI
+The images below compare the widths of the conformal regions at different confidence levels: 90%, 95%, and 99%.
+
+<div style="display: flex; justify-content: space-around;">
+  <figure>
+    <img src="https://github.com/user-attachments/assets/8bed8c03-caaa-41f6-9494-7d0683146719" alt="Conformal Region Width at 90%" width="330"/>
+  </figure>
+  <figure>
+    <img src="https://github.com/user-attachments/assets/50637985-8fdf-44c0-9a67-4a399cab2e5c" alt="Conformal Region Width at 95%" width="330"/>
+  </figure>
+  <figure>
+    <img src="https://github.com/user-attachments/assets/a8539e95-0d19-42eb-8f70-7216f805a996" alt="Conformal Region Width at 99%" width="330"/>
+  </figure>
+</div>
+
+And here the Pinball losses and Winkler scores for each model:
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <figure>
+    <img src="https://github.com/user-attachments/assets/73c63a07-d3ab-443f-8a18-a31356289f7f" alt="Pinball Losses" width="500"/>
+  </figure>
+  <figure>
+    <img src="https://github.com/user-attachments/assets/3f8c73fa-3b7f-4ddc-ab26-7f15a2791358" alt="Winkler Scores" width="500"/>
+  </figure>
+</div>
+It is evident that the Scalar-on-function model for  $\Delta RV_t$ achieves the tightest intervals in two out of the three chosen significance levels. Additionally, it outperforms the other models with the lowest Pinball loss and Winkler score. However, the Linear Model also demonstrates strong performance, making it a competitive alternative.
 
 # Hedging Strategy based on Conformal Prediction
 The final stage of this study exploits the goodness of fit and the predictive power of the Scalar-on-function for $\Delta RV_{t}$, combined with the probabilistic power of the Conformal Prediction method. The model is applied directly to data for matched stocks: Stock 59 with AMGN, Stock 4 with CHTR, and Stock 41 with CSCO, using IV data from January 1 to December 31, 2020.
