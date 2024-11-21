@@ -182,7 +182,7 @@ And here the Pinball losses and Winkler scores for each model:
     <img src="https://github.com/user-attachments/assets/3f8c73fa-3b7f-4ddc-ab26-7f15a2791358" alt="Winkler Scores" width="500"/>
   </figure>
 </div>
-It is evident that the Scalar-on-function model for  $\Delta RV_t$ achieves the tightest intervals in two out of the three chosen significance levels. Additionally, it outperforms the other models with the lowest Pinball loss and Winkler score. However, the Linear Model also demonstrates strong performance, making it a competitive alternative.
+It is clear that the Scalar-on-function model for $\Delta RV_{t}$ achieves the tightest intervals in two out of the three chosen significance levels. Additionally, it outperforms the other models with the lowest Pinball loss and Winkler score. However, the Linear Model also demonstrates strong performance, making it a competitive alternative.
 
 # Hedging Strategy based on Conformal Prediction
 The final stage of this study exploits the goodness of fit and the predictive power of the Scalar-on-function for $\Delta RV_{t}$, combined with the probabilistic power of the Conformal Prediction method. The model is applied directly to data for matched stocks: Stock 59 with AMGN, Stock 4 with CHTR, and Stock 41 with CSCO, using IV data from January 1 to December 31, 2020.
