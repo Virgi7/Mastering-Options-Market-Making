@@ -298,7 +298,7 @@ lines(betafd - betastderrfd, lty=2, lwd=1)
 
 # Residuals fitting
 volatility_res_pen = as.numeric(volatility - sqrt(volatility_squaredhat_pen))
-fRegressList_pen_RESID = fRegress(abs(volatility_res_pen), logret_list, betalist_pen)
+fRegressList_pen_RESID = fRegress(log(abs(volatility_res_pen)), logret_list, betalist_pen)
 
 #####
 # Validation
@@ -366,7 +366,7 @@ vol <- vol[vol$time_id %in% split_results$validation, ]
 volatility <- as.numeric(vol$target)
 
 # Non-conformity measure
-non_conformity_score_validation <- abs(vol_pred_validation - volatility)/res_pred_validation
+non_conformity_score_validation <- abs(vol_pred_validation - volatility)/exp(res_pred_validation)
 
 coverage <- seq(0,1, 0.02)
 quan_value_of_ncscore_alfa <- as.numeric(quantile(non_conformity_score_validation, coverage))
@@ -427,8 +427,7 @@ logretSmooth = smooth.basis(abscissa, Xobs0, new_logret_basis)
 logretfd = logretSmooth$fd
 
 vol_pred_test <- sqrt(inprod(logretfd, beta_est))
-res_pred_test <- inprod(logretfd, beta_est_res)
-res_pred_test[res_pred_test<0] <- 0
+res_pred_test <- exp(inprod(logretfd, beta_est_res))
 
 vol <- as.data.frame(train[train$stock_id == stock_id_chosen, c("target", "time_id")])
 vol <- vol[vol$time_id %in% split_results$test, ]
@@ -617,7 +616,7 @@ model_train <- lm(true_vol_train ~ pred_vol_train)
 res_train <- resid(model_train)
 
 # Residuals fitting
-fRegressList_RESID = fRegress(abs(res_train), logret_list, betalist)
+fRegressList_RESID = fRegress(log(abs(res_train)), logret_list, betalist)
 
 #####
 # Validation
@@ -675,7 +674,7 @@ logretSmooth = smooth.basis(abscissa, Xobs0, new_logret_basis)
 logretfd = logretSmooth$fd
 beta_est_res <- fRegressList_RESID$betaestlist[[2]]$fd
 res_pred_validation <- inprod(logretfd, beta_est_res)
-non_conformity_score_valid <- abs(vol_predicted_valid - true_vol_valid) / (res_pred_validation) 
+non_conformity_score_valid <- abs(vol_predicted_valid - true_vol_valid) / exp(res_pred_validation) 
 
 coverage <- seq(0, 1, 0.02)
 quan_value_of_ncscore_alfa <- as.numeric(quantile(non_conformity_score_valid, coverage))
@@ -735,8 +734,7 @@ logretSmooth = smooth.basis(abscissa, Xobs0, new_logret_basis)
 logretfd = logretSmooth$fd
 
 vol_predicted_test <- predict(model_train, newdata = data.frame(pred_vol_train = pred_vol_test))
-res_predicted_test <- inprod(logretfd, beta_est_res)
-res_predicted_test[res_predicted_test<0] <- 0
+res_predicted_test <- exp(inprod(logretfd, beta_est_res))
 RMSE.test <- rmse(true_vol_test, vol_predicted_test)
 
 # Pinball Loss e Winkler score
@@ -759,7 +757,7 @@ for (i in 1:length(quan_value_of_ncscore_alfa)) {
   alfa_wink = 1 - coverage[i]
   Winkler_Score_alfa_linear[i, ] <- mapply(winkler_score, true_vol_test, cp_lower_alfa_linear[i, ], cp_upper_alfa_linear[i, ], MoreArgs = list(alpha = 1 - alfa_wink))
 }
-
+Pinball_Loss_alfa_linear[1,]<-rep(0,766)
 #########################################
 #### Scalar-on-function for DeltaRV #####
 #########################################
@@ -949,7 +947,7 @@ lines(betafd + betastderrfd, lty=2, lwd=1)
 lines(betafd - betastderrfd, lty=2, lwd=1)
 
 delta_volres_pen_real = as.numeric(delta_volhat_pen + df_past_realized_train$pred - vol) 
-fRegressList_pen_RESID = fRegress(abs(delta_volres_pen_real), logret_list, betalist_pen)
+fRegressList_pen_RESID = fRegress(log(abs(delta_volres_pen_real)), logret_list, betalist_pen)
 
 #####
 # Validation
@@ -1015,7 +1013,7 @@ res_pred_validation <- inprod(logretfd, beta_est_res)
 
 # Non-conformity measure
 vol_res_pred_valid <- delta_vol_pred_validation + df_past_realized_validation$pred - vol
-non_conformity_score_validation <- abs(vol_res_pred_valid)/res_pred_validation
+non_conformity_score_validation <- abs(vol_res_pred_valid)/exp(res_pred_validation)
 
 quan_value_of_ncscore_alfa <- as.numeric(quantile(non_conformity_score_validation, coverage))
 #####
@@ -1075,8 +1073,7 @@ logretSmooth = smooth.basis(abscissa, Xobs0, new_logret_basis)
 logretfd = logretSmooth$fd
 
 vol_pred_test <- inprod(logretfd, beta_est) + df_past_realized_test$pred
-res_pred_test <- inprod(logretfd, beta_est_res)
-res_pred_test[res_pred_test<0] <- 0
+res_pred_test <- exp(inprod(logretfd, beta_est_res))
 RMSE.test <- rmse(vol_pred_test, vol)
 
 
@@ -1218,3 +1215,4 @@ ggplot(df_winkler_long, aes(x = coverage, y = winkler_score)) +
   scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
   ylim(0, max(df_winkler_long$winkler_score) * 1.1) +
   scale_y_log10()
+
