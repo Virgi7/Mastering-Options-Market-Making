@@ -141,9 +141,7 @@ $$
 \Gamma_{1 - \alpha}(x_i) = (\hat{y_i} - q_{1 - \alpha} \cdot \sigma_i, \; \hat{y_i} + q_{1 - \alpha} \cdot \sigma_i )
 $$
 
-where $q_{1-\alpha}$ is the quantile corresponding to the desired coverage level $1-\alpha$, of the non-conformity scores distribution R, defined as 
-
-$R_i = \left|\frac{y_i - \hat{y}_i}{\sigma_i} \right|$ and $\sigma_i = e^{\mu_i}$, where $\mu_i$ is the predicted value of $\ln(|y_i - \hat{y}_i|)$.
+where $q_{1-\alpha}$ is the quantile corresponding to the desired coverage level $1-\alpha$, of the non-conformity scores distribution R, defined as $R_i = \left|\frac{y_i - \hat{y}_i}{\sigma_i} \right|$ and $\sigma_i = e^{\mu_i}$, where $\mu_i$ is the predicted value of $\ln(|y_i - \hat{y}_i|)$.
 
 With the application of this method, the first thing done is the evaluation of the out-of-sample forecasting, for each of the three method described above, confirming that the linear model and the Scalar-on-function for $\Delta RV_t$ are the best performing ones.
 
