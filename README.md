@@ -268,4 +268,5 @@ The dataset is too large to upload directly to GitHub. You can download it from 
 [^7]: Antonio Briola and Silvia Bartolucci and Tomaso Aste *Deep Limit Order Book Forecasting: A Microstructural Guide*. 2024.
 [^8]: Kaggle. (2021). *Optiver Realized Volatility Prediction*. 2021. Retrieved from [https://www.kaggle.com/competitions/optiver-realized-volatility-prediction/data](https://www.kaggle.com/competitions/optiver-realized-volatility-prediction/data).
 [^9]: Stassl. *Recovering time_id order*. 2023. Retrieved from [https://www.kaggle.com/code/stassl/recovering-time-id-order](https://www.kaggle.com/code/stassl/recovering-time-id-order).
+[^10]: Freedman, David and Lane, David. *A Nonstochastic Interpretation of Reported Significance Levels*. 1983.
 
