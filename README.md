@@ -201,13 +201,15 @@ For some further improvements, the current approach lacks precise time order in 
 
 # Repository Files
 ### Data
-- _train.xlsx_: Excel file containing all the target data
-- _book_train.parquet_: Folder containing a parquet file with all the order book data related to each stock
+- _train.xlsx_: Excel file containing all the target data.
+- _book_train.parquet_: Folder containing a parquet file with all the order book data related to each stock.
+- _correct_order_time_id.xlsx_: Excel file containing the right time_ids ordering.
+- _Stocks IV.xlsx_: Excel file containing dates and daily implied volatilities for the three matched stocks.
 ### Scripts
 - _1.Simple Linear Regression in-sample.R_: This script contains the Simple Linear Regression implementation.
 - _2.Scalar-on-function for RV2 in-sample.R_: This script contains the Scalar-on-function implementation for $RV_{t_{i+10min}}^2$.
-- _2.1Optimal number of basis selection.R_: This script performs the best parameters selection for the functional model.
-- _2.2Freedman and Lane permutation test.R_: This script performs the Freedman and Lane permutation test on functional model.
+- _2.1 Optimal number of basis selection.R_: This script performs the best parameters selection for the functional model.
+- _2.2 Freedman and Lane permutation test.R_: This script performs the Freedman and Lane permutation test on functional model.
 - _3.Scalar-on-function for DeltaRV in-sample.R_:This script contains the Scalar-on-function implementation for $\Delta RV_t$.
 - _4.Simple Linear Regression+CP out-of-sample.R_:  This script contains the Simple Linear Regression and Conformal Prediction implementation and evaluation on out-of-sample data.
 - _5.Scalar-on-function for RV2+CP out-of-sample.R_:  This script contains the Scalar-on-function for $RV_{t_{i+10min}}^2$ and Conformal Prediction implementation and evaluation on out-of-sample data.
@@ -215,3 +217,10 @@ For some further improvements, the current approach lacks precise time order in 
 - _7.Pinball Losses and Winkler Scores.R_:  This script contains the Pinball loss and Winkler score evaluations for each of the three models.
 - _8.Rolling window forecasting.R_: This script performs a time reordering and the last two months of 2020 realized volatility forecasting, using a rolling window.
 - _fRegress std error mia versione.R_: This script is a modified version of fRegress.stderr function (it is upload as a library at the beginning of each of the previous scripts).
+
+### How to use
+- Download the _data_ folder and the script interested in.
+- Put the script in the _data_ folder.
+- Run the script, selecting the wanted stock number.
+- In using _2.Scalar-on-function for RV2 in-sample.R_ and _5.Scalar-on-function for RV2+CP out-of-sample.R_, ensure that any negative volatility values are set to 0 before running the scripts.
+- In _8.Rolling window forecasting.R_, it is needed to set the right stock number, choosing between 4, 41 and 59 and to match them with the right Excel data and plots folder: 4 with CHTR, 41 with CSCO and 59 with AMGN
