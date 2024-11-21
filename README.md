@@ -175,7 +175,7 @@ The images below compare the widths of the conformal regions at different confid
 <br><br>
 And here the Pinball losses and Winkler scores for each model:
 
-<div style="display: flex; justify-content: center; gap: 20px;">
+<div align="center" style="display: flex; justify-content: center; gap: 20px;">
   <figure>
     <img src="https://github.com/user-attachments/assets/73c63a07-d3ab-443f-8a18-a31356289f7f" alt="Pinball Losses" width="350"/>
   </figure>
