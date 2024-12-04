@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/74692b22-9e73-40de-a11f-bd33915f883c)# Mastering Options Market Making: Forecasting Short-Term Realized Volatility Using Non-Parametric Models
+# Mastering Options Market Making: Forecasting Short-Term Realized Volatility Using Non-Parametric Models
 This repository contains the code for a Master thesis project aimed at developing an **Hedging Strategy based on a Realized Volatility Forecasting Model**.
 
 **Volatility** plays a critical role in financial markets by quantifying the magnitude of price changes in a security, directly influencing trading strategies and risk management. Traders, especially market makers, rely on two primary metrics to assess volatility: **realized volatility**, which measures historical price movements and **implied volatility**, which reflects market expectations. The comparison between these two quantities is particularly important for market makers, as it helps guide the development of effective hedging strategies. In fact, by generating buy and sell signals based on this comparison, market makers understand the best position to take and can better manage risk and exploit profit opportunities. As such, it is essential to develop a reliable model for predicting realized volatility, while implied volatility is derived from market option prices.
@@ -177,7 +177,7 @@ And here the Pinball losses and Winkler scores for each model:
 
 <div align="center" style="display: flex; justify-content: center; gap: 20px;">
   <figure>
-    <img src="https://github.com/user-attachments/assets/73c63a07-d3ab-443f-8a18-a31356289f7f" alt="Pinball Losses" width="350"/>
+    <img src="https://github.com/user-attachments/assets/4f12e978-629b-447b-9e12-40cea94976b3" alt="Pinball Losses" width="350"/>
   </figure>
   <figure>
     <img src="https://github.com/user-attachments/assets/3f8c73fa-3b7f-4ddc-ab26-7f15a2791358" alt="Winkler Scores" width="350"/>
