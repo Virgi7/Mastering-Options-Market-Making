@@ -438,7 +438,7 @@ RMSE.test <- rmse(true_volatility_test, vol_pred_test)
 # Pinball Loss e Winkler score
 cp_lower_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_volatility_test)) 
 cp_upper_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_volatility_test)) 
-Pinball_Loss_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_volatility_test)) 
+Pinball_Loss_alfa <- matrix(NA, 2*length(quan_value_of_ncscore_alfa)-1, length(true_volatility_test)) 
 Winkler_Score_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_volatility_test)) 
 
 winkler_score <- function(true_value, lower_bound, upper_bound, alpha) {
@@ -458,15 +458,18 @@ for (i in 1:length(quan_value_of_ncscore_alfa)) {
   cp_lower_alfa[i, ] <- vol_pred_test - quan_value_of_ncscore_alfa[i] * res_pred_test
   cp_upper_alfa[i, ] <- vol_pred_test + quan_value_of_ncscore_alfa[i] * res_pred_test
   
-  if (coverage[i] >= 0.50) {
-    Pinball_Loss_alfa[i, ] <- pinLoss(true_volatility_test, cp_upper_alfa[i, ], coverage[i])
-  } else {
-    Pinball_Loss_alfa[i, ] <- pinLoss(true_volatility_test, cp_lower_alfa[i, ], 1 - coverage[i])
-  }
+
+    Pinball_Loss_alfa[i+length(quan_value_of_ncscore_alfa)-1, ] <- pinLoss(true_volatility_test, cp_upper_alfa[i, ], coverage[i]/2+1/2)
+ 
+    Pinball_Loss_alfa[length(quan_value_of_ncscore_alfa)-i+1, ] <- pinLoss(true_volatility_test, cp_lower_alfa[i, ], (1 - coverage[i])/2)
   
+  Pinball_Loss_alfa[length(quan_value_of_ncscore_alfa), ] <- pinLoss(true_volatility_test,vol_pred_test, 0.5)
   alfa_wink = 1 - coverage[i]
   Winkler_Score_alfa[i, ] <- mapply(winkler_score, true_volatility_test, cp_lower_alfa[i, ], cp_upper_alfa[i, ], MoreArgs = list(alpha = 1 - alfa_wink))
 }
+
+
+plot(0:100,rowMeans(Pinball_Loss_alfa))
 
 ############################
 ####### Linear Model #######
@@ -740,7 +743,7 @@ RMSE.test <- rmse(true_vol_test, vol_predicted_test)
 # Pinball Loss e Winkler score
 cp_lower_alfa_linear <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_vol_test)) 
 cp_upper_alfa_linear <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_vol_test)) 
-Pinball_Loss_alfa_linear <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_vol_test)) 
+Pinball_Loss_alfa_linear <- matrix(NA, 2*length(quan_value_of_ncscore_alfa)-1, length(true_vol_test)) 
 Winkler_Score_alfa_linear <- matrix(NA, length(quan_value_of_ncscore_alfa), length(true_vol_test)) 
 
 
@@ -748,16 +751,14 @@ for (i in 1:length(quan_value_of_ncscore_alfa)) {
   cp_lower_alfa_linear[i, ] <- vol_pred_test - quan_value_of_ncscore_alfa[i] * res_predicted_test
   cp_upper_alfa_linear[i, ] <- vol_pred_test + quan_value_of_ncscore_alfa[i] * res_predicted_test
   
-  if (coverage[i] >= 0.50) {
-    Pinball_Loss_alfa_linear[i, ] <- pinLoss(true_vol_test, cp_upper_alfa_linear[i, ], coverage[i])
-  } else {
-    Pinball_Loss_alfa_linear[i, ] <- pinLoss(true_vol_test, cp_lower_alfa_linear[i, ], 1 - coverage[i])
-  }
+  Pinball_Loss_alfa_linear[i+length(quan_value_of_ncscore_alfa)-1, ] <- pinLoss(true_vol_test, cp_upper_alfa_linear[i, ], coverage[i]/2+1/2)
   
+  Pinball_Loss_alfa_linear[length(quan_value_of_ncscore_alfa)-i+1, ] <- pinLoss(true_vol_test, cp_lower_alfa_linear[i, ], (1 - coverage[i])/2)
+  
+  Pinball_Loss_alfa_linear[length(quan_value_of_ncscore_alfa), ] <- pinLoss(true_vol_test,vol_pred_test, 0.5)
   alfa_wink = 1 - coverage[i]
   Winkler_Score_alfa_linear[i, ] <- mapply(winkler_score, true_vol_test, cp_lower_alfa_linear[i, ], cp_upper_alfa_linear[i, ], MoreArgs = list(alpha = 1 - alfa_wink))
 }
-Pinball_Loss_alfa_linear[1,]<-rep(0,766)
 #########################################
 #### Scalar-on-function for DeltaRV #####
 #########################################
@@ -1080,18 +1081,18 @@ RMSE.test <- rmse(vol_pred_test, vol)
 # Pinball Loss e Winkler score
 cp_lower_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(vol)) 
 cp_upper_alfa <- matrix(NA, length(quan_value_of_ncscore_alfa), length(vol)) 
-Pinball_Loss_alfa_delta <- matrix(NA, length(quan_value_of_ncscore_alfa), length(vol)) 
+Pinball_Loss_alfa_delta <- matrix(NA, 2*length(quan_value_of_ncscore_alfa)-1, length(vol)) 
 Winkler_Score_alfa_delta <- matrix(NA, length(quan_value_of_ncscore_alfa), length(vol)) 
 
 for (i in 1:length(quan_value_of_ncscore_alfa)) {
   cp_lower_alfa[i, ] <- vol_pred_test - quan_value_of_ncscore_alfa[i] * res_pred_test
   cp_upper_alfa[i, ] <- vol_pred_test + quan_value_of_ncscore_alfa[i] * res_pred_test
   
-  if (coverage[i] >= 0.50) {
-    Pinball_Loss_alfa_delta[i, ] <- pinLoss(true_volatility_test, cp_upper_alfa[i, ], coverage[i])
-  } else {
-    Pinball_Loss_alfa_delta[i, ] <- pinLoss(true_volatility_test, cp_lower_alfa[i, ], 1 - coverage[i])
-  }
+  Pinball_Loss_alfa_delta[i+length(quan_value_of_ncscore_alfa)-1, ] <- pinLoss(true_volatility_test, cp_upper_alfa[i, ], coverage[i]/2+1/2)
+  
+  Pinball_Loss_alfa_delta[length(quan_value_of_ncscore_alfa)-i+1, ] <- pinLoss(true_volatility_test, cp_lower_alfa[i, ], (1 - coverage[i])/2)
+  
+  Pinball_Loss_alfa_delta[length(quan_value_of_ncscore_alfa), ] <- pinLoss(true_volatility_test,vol_pred_test, 0.5)
   
   alfa_wink = 1 - coverage[i]
   Winkler_Score_alfa_delta[i, ] <- mapply(winkler_score, true_volatility_test, cp_lower_alfa[i, ], cp_upper_alfa[i, ], MoreArgs = list(alpha = 1 - alfa_wink))
@@ -1126,7 +1127,7 @@ df_winkler_long <- df_winkler_long %>%
 
 # Preparation of Pinball loss dataframe
 df_pinball <- data.frame(
-  coverage = coverage,
+  coverage = 0:100,
   pinball_loss_1 = rowMeans(Pinball_Loss_alfa_linear),
   pinball_loss_2 = rowMeans(Pinball_Loss_alfa),
   pinball_loss_3 = rowMeans(Pinball_Loss_alfa_delta)   
